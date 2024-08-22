@@ -1,0 +1,1 @@
+git remote set-url origin https://classic_token@github.com/julvalmo/armstuff.git/
