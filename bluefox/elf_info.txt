@@ -1,0 +1,105 @@
+Executable Linkable Format
+
+Tables:
+	- file header
+	- program header
+	- section headers
+
+Commands:
+	readelf [executable] -h
+		the -h argument is to give the result of the headers table from the elf
+Example:
+-> user@host$ readelf print64.out -h
+
+The ELF file header fields subdivide into four main groups: the ELF file header 
+information, information about the program’s target platform, the program entry 
+point field, and the table location fields.
+
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
+  Class:                             ELF64
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           AArch64
+  Version:                           0x1
+  Entry point address:               0x4004d0
+  Start of program headers:          64 (bytes into file)
+  Start of section headers:          6528 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               64 (bytes)
+  Size of program headers:           56 (bytes)
+  Number of program headers:         8
+  Size of section headers:           64 (bytes)
+  Number of section headers:         24
+  Section header string table index: 23
+
+	MAGIC FIELD:   The magic field is a constant 16- byte binary pattern (ident pattern)
+		       It always starts with the same 4- byte sequence, beginning with byte 0x7f followed by  
+		         3 bytes corresponding to the ASCII characters ELF
+
+	CLASS FIELD:   Normally specifies which elf class it is
+	DATA FIELD:    tells the loader that the ELF file’s own fields should be read as either big-  or little- endian
+		         ELF files on Arm normally use the little- endian encoding for the ELF file format itself
+	VERSION FIELD: the loader that we are using version 1 of the ELF file format. This field is designed to future- proof the ELF file format.
+
+	MACHINE FIELD:
+	  tells the loader what processor class the program is designed 
+          to run on. Our 64- bit program sets this field to AArch64, indicating that the ELF file
+          will run only on 64- bit Arm processors. Our 32- bit program specifies ARM, 
+          which means it will run only on 32- bit Arm processors or as a 32- bit process on 
+          a 64- bit Linux machine using the processor’s 32- bit AArch32 execution mode
+
+	TODO: Research AArch32 execution mode
+
+	FLAGS FIELD:
+	  The flags field specifies additional information that might be needed by the 
+          loader. This field is architecture- specific. In our 64- bit program, for example, no 
+          architecture- specific flags are defined, and this field will always hold the value 
+          zero. For our 32- bit Arm program, by contrast, this field informs the loader that 
+          the program is compiled to use the embedded ABI (EABI) profile version 5 and 
+          that the program expects hardware- support for floating point operations. The 
+          Arm specification defines four Arm- specific values that can be placed in the 
+          e_flags field of the ELF program header
+		-------- ARM 32bit e_flags values ---------
+	 EF_ARM_ABIMASK (0xff000000)
+		The top 8 bits of the e_flags value hold the 
+		ABI used by the ELF file. Currently this top byte 
+		should hold the value 5 (i.e., 0x05000000), 
+		meaning the ELF file uses EABI version 5.
+	 EF_ARM_BE8 (0x00800000)
+		 Specifies that the ELF file contains BE- 8 code.
+	EF_ARM_ABI_FLOAT_HARD (0x00000400)
+		 Specified to indicate that the ELF file conforms to 
+		 the Arm hardware floating- point procedure call 
+		 standard, which means the processor will be 
+		 Armv7 or above and include the VFP3- D16 
+		 floating- point hardware extension. 4
+	 EF_ARM_ABI_FLOAT_SOFT (0x00000200)
+		 Specified to indicate that the ELF file conforms to 
+		 the software floating- point procedure call 
+		 standard. Floating- point operations are handled 
+		 via calls to library functions that emulate floating 
+		 points in software
+
+	TYPE FIELD: specifies what the purpose of the ELF file is. In this case, 
+                    the type field specifies that these programs are dynamically linked binaries that 
+                    a system loader can prepare and then execute
+
+	ENTRY POINT FIELD: of the ELF header tells the loader where the program 
+			   entry point is. When the program has been prepared in memory by the operating 
+			   system or loader and is ready to begin executing, this field specifies where that 
+			   starting location is
+		--------- C, C++ vs Entry Point ----------
+		 Although, by convention, C and C++ programs “begin” at the main function, 
+		 programs do not actually begin execution here. Instead, they begin execution in 
+		 a small stub of assembly code, traditionally at the symbol called _start. When 
+		 linking against the standard C runtime, the _start function is usually a small 
+		 stub of code that passes control to the libc helper function __libc_start_main. 
+		 This function then prepares the parameters for the program’s main function and 
+		 invokes it. The main function then runs the program’s core logic, and if main 
+		 returns to __libc_start_main, the return value of main is then passed to exit 
+		 to gracefully exit the program
+ 

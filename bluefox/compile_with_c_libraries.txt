@@ -1,0 +1,23 @@
+ld print64.o /usr/lib/aarch64-linux-gnu/crt1.o /usr/lib/aarch64-linux-gnu/crti.o /usr/lib/aarch64-linux-gnu/crtn.o /usr/lib/aarch64-linux-gnu/libc.so -o print64.so
+
+ OBJECT FILES
+ /usr/lib/aarch64-linux-gnu/crt1.o
+ /usr/lib/aarch64-linux-gnu/crti.o
+ /usr/lib/aarch64-linux-gnu/crtn.o
+
+ PURPOSES
+ Implements the C runtime stubs that 
+implements the _start function that 
+bootstraps the program, runs global 
+C++ constructors, and then calls the 
+program’s main function
+
+------------------------------------
+ OBJECT FILE
+ /usr/lib/aarch64-linux-gnu/libc.so
+
+ PURPOSES
+The C runtime library export stubs 
+needed to bootstrap the program and 
+that references the printf and exit 
+functions that our program uses
