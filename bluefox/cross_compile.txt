@@ -1,0 +1,9 @@
+arm-gnueabihf-as
+arm-gnueabihf-ld
+
+arm-linux-gnueabihf-gcc example.c -o example.so -v
+	-v is for verbose compilation
+	here i'm just compiling for 32bit arm
+
+TODO:
+	research armel vs armhf
