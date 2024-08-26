@@ -1,0 +1,5 @@
+to compile a program in c we can use
+  cc program.c
+
+or to use the gnu compiler collection version we use the -ansi arg
+  gcc -ansi program.c
