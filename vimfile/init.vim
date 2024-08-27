@@ -21,9 +21,10 @@ set termguicolors     " enable true colors support
 
 " let ayucolor="mirage" " for mirage version of theme
 
-" let ayucolor="dark"   " for dark version of theme
 
 colorscheme ayu
+
+let ayucolor="dark"   " for dark version of theme
 
 let mapleader = " "
 " n (normal mode) nore(no recursive execution) map(map)
@@ -40,7 +41,7 @@ nnoremap <leader>bp :buffer #<CR>
 " fzf mappings
 nnoremap <C-p>:GFiles<CR>
 " backup to fuzzy find project files if not in a repo
-nnoremap <leader>pf :Files<CR>
+nnoremap <leader>fp :Files<CR>
 
 " save files with leader key
 nnoremap <leader>fs :w<CR>
