@@ -47,9 +47,11 @@ nnoremap <leader>fp :Files<CR>
 nnoremap <leader>fs :w<CR>
 
 " quickfix list
-nnoremap <leader>qo :copen<CR>
-nnoremap <leader>qn :cnext<CR>
-nnoremap <leader>qp :cprevious<CR>
+nnoremap <leader>cc :copen<CR>
+nnoremap <leader>cl :cnext<CR>
+nnoremap <leader>ch :cprevious<CR>
+nnoremap <leader>cj :colder<CR>
+nnoremap <leader>ck :cnewer<CR>
 
 
 " highlight search
@@ -58,4 +60,4 @@ nnoremap <leader>shd :set nohlsearch<CR>
 
 
 " close buffer
-nnoremap <leader>c :close<CR>
+nnoremap <leader>bd :bd<CR>
