@@ -62,5 +62,5 @@ nnoremap <leader>shd :set nohlsearch<CR>
 " close buffer
 nnoremap <leader>bd :bd<CR>
 
-" simple compile gcc ansi
-nnoremap <leader>gc :!gcc -ansi % -o %:r.out<CR>
+" simple compile gcc
+nnoremap <leader>gc :!gcc -Wall  % -o %:r.out<CR>
